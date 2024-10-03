@@ -1,35 +1,23 @@
 import { Router } from "express";
 
-const filmesRoutes = Router();
+const planetaRoutes = Router();
 
-let filmesMarcantes = [
-  {
-    id: Number(Math.floor(Math.random()* 99) +1),
-    nome: "A Cinco Passos de Você",
-    genero: "Drama",
-    emCartaz: false,
-  },
-  {
-    id: Number(Math.floor(Math.random()* 99) +1),
-    nome: "Viva! A vida é uma festa",
-    genero: "Infantil/Fantasia",
-    emCartaz: false,
-  },
-  {
-    id: Number(Math.floor(Math.random()* 99) +1),
-    nome: "As Metas de Jessica Darling",
-    genero: "Infantil/Comédia",
-    emCartaz: false,
-  },
+let planetas = [
+{
+    id: Number(Math.floor(Math.random()* 999999) +1),
+    nome: "Dev",
+    temperatura: 13.3,
+    agua: false, //indicação de existência de água
+    atm: ["JS", "NODE", "VS", "Code"],
+},
 ];
-
-// rota para buscar todos os elementos do array filmesMarcantes
-filmesRoutes.get("/", (req, res) => {
-  return res.status(200).send(filmesMarcantes);
+// rota para buscar todos os elementos do array planetas
+planetaRoutes.get("/", (req, res) => {
+  return res.status(200).send(planetas);
 });
 
 // rota para criar nova filme marcante
-filmesRoutes.post("/", (req, res) => {
+planetaRoutes.post("/", (req, res) => {
   const { titulo, genero, emCartaz } = req.body;
 
   const novoFilme = {
@@ -39,17 +27,17 @@ filmesRoutes.post("/", (req, res) => {
     emCartaz,
   };
 
-  filmesMarcantes.push(novoFilme);
-  return res.status(201).send(filmesMarcantes);
+  planetas.push(novoFilme);
+  return res.status(201).send(planetas);
 });
 
-// rota para buscar um elemento específico do array filmesMarcantes
-filmesRoutes.get("/:id", (req, res) => {
+// rota para buscar um elemento específico do array planetas
+planetaRoutes.get("/:id", (req, res) => {
   const { id } = req.params;
 
   console.log(id);
 
-  const filmes = filmesMarcantes.find((movie) => movie.id === Number(id));
+  const filmes = planetas.find((movie) => movie.id === Number(id));
 
   //console.log(guloseima);
 
@@ -61,10 +49,10 @@ filmesRoutes.get("/:id", (req, res) => {
 });
 
 // rota para editar um filme marcante
-filmesRoutes.put("/:id", (req, res) => {
+planetaRoutes.put("/:id", (req, res) => {
   const { id } = req.params;
 
-  const filme = filmesMarcantes.find((movie) => movie.id === Number(id));
+  const filme = planetas.find((movie) => movie.id === Number(id));
 
   //console.log(filme);
 
@@ -86,16 +74,16 @@ filmesRoutes.put("/:id", (req, res) => {
 });
 
 // rota para deletar um filme marcante
-filmesRoutes.delete("/:id", (req, res) => {
+planetaRoutes.delete("/:id", (req, res) => {
   const { id } = req.params;
 
-  const filme = filmesMarcantes.find((movie) => movie.id === Number(id));
+  const filme = planetas.find((movie) => movie.id === Number(id));
 
   if (!filme) {
     return res.status(404).send({ message: "filme não encontrado!" });
   }
 
-  filmesMarcantes = filmesMarcantes.filter((movie) => movie.id !== Number(id));
+  planetas = planetas.filter((movie) => movie.id !== Number(id));
 
   return res.status(200).send({
     message: "filme deletado!",
@@ -103,4 +91,5 @@ filmesRoutes.delete("/:id", (req, res) => {
   });
 });
 
-export default filmesRoutes;
+
+export default planetaRoutes;
